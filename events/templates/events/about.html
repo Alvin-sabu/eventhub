@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Event Management System</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .navbar {
+            margin-bottom: 0;
+        }
+        .about-section {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            padding: 60px 0;
+            text-align: center;
+        }
+        .about-section h1 {
+            font-weight: bold;
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        .about-section p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        .team-section {
+            background-color: #fff;
+            padding: 60px 0;
+            text-align: center;
+        }
+        .team-section h2 {
+            font-weight: bold;
+            font-size: 36px;
+            margin-bottom: 40px;
+        }
+        .team-member {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        .team-member img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+        .team-member h3 {
+            font-weight: bold;
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        .team-member p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Event Management System</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="about-section">
+        <h1>About Us</h1>
+        <p>We are a dedicated team of event management professionals at Marian College Kuttikkanam, committed to organizing exceptional events that enrich campus life and foster community spirit. Our mission is to create vibrant and memorable experiences that align with the college's values and goals.</p>
+        <p>Specializing in academic, cultural, and social events, we collaborate closely with students, faculty, and staff to bring innovative ideas to life. Whether it’s a seminar, a festival, or a student-led initiative, our team ensures every detail is thoughtfully planned and executed to enhance the college experience.</p>
+    </div>
+
+    <div class="team-section">
+        <h2>Meet Our Team</h2>
+        <div class="container">
+            <div class="row">
+                {% for member in team_members %}
+                    <div class="col-md-4">
+                        <div class="team-member">
+                            <img src="{{ member.image.url }}" alt="{{ member.name }}">  <!-- Use 'image' if the field is named 'image' -->
+                            <h3>{{ member.name }}</h3>
+                            <p>{{ member.role }}</p>
+                            <p>{{ member.bio }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center py-4">
+        <p>&copy; 2024 Event Management System. All rights reserved.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

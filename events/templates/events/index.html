@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our College</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .header {
+            background-color: #4b5c6d;
+            color: #fff;
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 3rem;
+        }
+
+        .header h2 {
+            margin: 10px 0;
+            font-size: 1.8rem;
+            font-weight: 300;
+        }
+
+        .header p {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .hero-section {
+            position: relative;
+            overflow: hidden;
+            height: 80vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .video-slider {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-slider video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .video-slider video.active {
+            opacity: 1;
+        }
+
+        .nav-bar {
+            background-color: #343a40;
+            color: #fff;
+            padding: 15px 0;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .nav-bar a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.1rem;
+        }
+
+        .nav-bar a:hover {
+            color: #d0d0d0;
+        }
+
+        .features-section, .news-section, .footer {
+            background-color: #ffffff;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .features-section h2, .news-section h2 {
+            margin-top: 0;
+            color: #007bff;
+            font-size: 2rem;
+        }
+
+        .features-section ul, .news-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0 0;
+        }
+
+        .features-section ul li, .news-section ul li {
+            margin: 10px 0;
+            font-size: 1.2rem;
+        }
+
+        .features-section ul li i, .news-section ul li i {
+            margin-right: 10px;
+            color: #007bff;
+        }
+
+        .footer {
+            background-color: #343a40;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            clear: both;
+        }
+
+        .arrow-button {
+            position: absolute;
+            top: 50%;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 2;
+            transform: translateY(-50%);
+        }
+
+        .arrow-button.left {
+            left: 10px;
+        }
+
+        .arrow-button.right {
+            right: 10px;
+        }
+
+        .arrow-button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header h2 {
+                font-size: 1.5rem;
+            }
+
+            .nav-bar a {
+                margin: 0 10px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Event Hub</h1>
+        <h2>Marian College Kuttikkanam</h2>
+        <p>Empowering Students for a Brighter Future</p>
+    </header>
+
+    <nav class="nav-bar">
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'signup' %}">Sign Up</a>
+        <a href="{% url 'about' %}">About Us</a>
+        <a href="{% url 'contact' %}">Contact Us</a>
+    </nav>
+
+    <div class="hero-section">
+        <div class="video-slider">
+            {% if videos %}
+                {% for video in videos %}
+                    <video class="{% if forloop.first %}active{% endif %}" autoplay muted>
+                        <source src="{{ MEDIA_URL }}{{ video.video.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                {% endfor %}
+            {% else %}
+                <p>No videos available</p>
+            {% endif %}
+            <button class="arrow-button left">&#10094;</button>
+            <button class="arrow-button right">&#10095;</button>
+        </div>
+    </div>
+
+    <div class="features-section">
+        <h2>Our Features</h2>
+        <ul>
+            <li><i class="fas fa-graduation-cap"></i> Best Education</li>
+            <li><i class="fas fa-book"></i> Experienced Faculty</li>
+            <li><i class="fas fa-users"></i> Friendly Environment</li>
+        </ul>
+    </div>
+
+    <div class="news-section">
+        <h2>Latest News</h2>
+        <ul>
+            <li><a href="#">News 1</a></li>
+            <li><a href="#">News 2</a></li>
+            <li><a href="#">News 3</a></li>
+        </ul>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Marian College. All rights reserved.</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var videos = document.querySelectorAll('.video-slider video');
+            var currentIndex = 0;
+
+            function showVideo(index) {
+                videos.forEach((video, i) => {
+                    video.classList.remove('active');
+                    if (i === index) {
+                        video.classList.add('active');
+                        video.play();
+                    }
+                });
+            }
+
+            function showNextVideo() {
+                currentIndex = (currentIndex + 1) % videos.length;
+                showVideo(currentIndex);
+            }
+
+            function showPrevVideo() {
+                currentIndex = (currentIndex - 1 + videos.length) % videos.length;
+                showVideo(currentIndex);
+            }
+
+            document.querySelector('.arrow-button.right').addEventListener('click', showNextVideo);
+            document.querySelector('.arrow-button.left').addEventListener('click', showPrevVideo);
+
+            videos.forEach((video, index) => {
+                video.addEventListener('ended', showNextVideo);
+                if (index === 0) {
+                    video.classList.add('active');
+                }
+            });
+
+            // Start video playback
+            setTimeout(() => {
+                videos[0].play();
+            }, 1000); // Initial delay before starting the first video
+        });
+    </script>
+</body>
+</html>

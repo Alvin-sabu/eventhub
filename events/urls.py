@@ -1,0 +1,30 @@
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('about/', views.about, name='about'),
+    path('contact/', views.contact, name='contact'),
+    path('signup/', views.signup, name='signup'),
+    path('login/', views.user_login, name='login'),
+    path('logout/', views.custom_logout, name='custom_logout'),
+    path('', views.event_list, name='event_list'),
+    path('<int:event_id>/', views.event_detail, name='event_detail'),
+    path('register/<int:event_id>/', views.register_for_event, name='register_for_event'),
+    path('registration/<int:registration_id>/', views.registration_detail, name='registration_detail'),
+    path('registration/<int:registration_id>/download/', views.download_token, name='download_token'),
+    path('registration_history/', views.user_registration_history, name='registration_history'),
+    path('events/already_registered/', views.already_registered, name='already_registered'),
+    path('calendar/', views.calendar_view, name='calendar_view'),
+    path('calendar/<int:year>/<int:month>/', views.calendar_view, name='calendar_view'),
+    path('calendar/events/<int:year>/<int:month>/<int:day>/', views.events_on_day, name='events_on_day'),
+    path('feedback/<int:event_id>/', views.feedback, name='feedback'),
+    path('feedback/thanks/', views.feedback_thanks, name='feedback_thanks'),
+    path('event/<int:event_id>/feedback/report/', views.event_feedback_report, name='event_feedback_report'),
+    path('events/results/<int:event_id>/', views.results_page, name='results_page'),
+    path('admin/contactmessage/', views.ContactMessageAdminView, name='contactmessage_changelist'),
+    path('admin/contact_messages/', views.contact_message_list, name='contact_message_list'),
+    path('contact/success/', views.contact_success, name='contact_success'),
+    path('profile/', views.profile_view, name='profile'),
+    path('profile/edit/', views.profile_edit, name='profile_edit'),
+    path('create-event/', views.create_event, name='create_event'),
+]

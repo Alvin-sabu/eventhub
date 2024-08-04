@@ -1,0 +1,56 @@
+<!-- events/templates/events/signup.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="title">Sign Up</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.as_p }}
+        </div>
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .container {
+        max-width: 500px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border: 1px solid #ccc;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .title {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background-color: #4CAF50;
+        color: #fff;
+    }
+
+    .btn-primary:hover {
+        background-color: #3e8e41;
+    }
+</style>
+{% endblock %}
