@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import datetime
-from django.utils import timezone
 
 class Event(models.Model):
     title = models.CharField(max_length=200)
@@ -29,6 +28,7 @@ class Event(models.Model):
 
     def __str__(self):
         return self.title
+
     def prize_counts(self):
         return {
             '1st': self.registrations.filter(prize='1st').count(),
@@ -59,7 +59,6 @@ class FrontPageVideo(models.Model):
     def __str__(self):
         return self.title
 
-
 class Feedback(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='feedback')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -83,9 +82,6 @@ class ContactMessage(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     replied = models.BooleanField(default=False)
 
-
-
-
 class TeamMember(models.Model):
     name = models.CharField(max_length=100)
     role = models.CharField(max_length=100)
@@ -94,38 +90,23 @@ class TeamMember(models.Model):
 
     def __str__(self):
         return self.name
-    
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from django.contrib.auth.models import User
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
-@receiver(post_save, sender=User)
-def create_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
+    def __str__(self):
+        return f"Profile for {self.user.username}"
 
-@receiver(post_save, sender=User)
-def save_profile(sender, instance, **kwargs):
-    instance.profile.save()
-
-# Ensure to import the Profile model and create it when a new user is created
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 @receiver(post_save, sender=User)
-def create_profile(sender, instance, created, **kwargs):
+def create_or_update_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
-
-@receiver(post_save, sender=User)
-def save_profile(sender, instance, **kwargs):
-    instance.profile.save()
-
-
+    else:
+        instance.profile.save()
 
 class CollegePoster(models.Model):
     title = models.CharField(max_length=100)
