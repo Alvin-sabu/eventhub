@@ -1,61 +1,44 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our College</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Event Hub - Marian College Kuttikkanam</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
+            font-family: 'Roboto', sans-serif;
         }
-
         .header {
-            background-color: #4b5c6d;
+            background: linear-gradient(to right, #1a2a6c, #b21f1f, #fdbb2d);
             color: #fff;
-            padding: 30px 0;
-            text-align: center;
+            padding: 2rem 0;
         }
-
-        .header h1 {
-            margin: 0;
-            font-size: 3rem;
+        .nav-bar {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1rem 0;
         }
-
-        .header h2 {
-            margin: 10px 0;
-            font-size: 1.8rem;
-            font-weight: 300;
+        .nav-bar a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+            transition: color 0.3s ease;
         }
-
-        .header p {
-            margin: 0;
-            font-size: 1.2rem;
+        .nav-bar a:hover {
+            color: #fdbb2d;
         }
-
         .hero-section {
             position: relative;
+            height: 70vh;
             overflow: hidden;
-            height: 80vh;
-            margin: 0;
-            padding: 0;
         }
-
         .video-slider {
-            position: relative;
+            position: absolute;
             width: 100%;
             height: 100%;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
-
         .video-slider video {
             position: absolute;
             top: 0;
@@ -66,118 +49,64 @@
             opacity: 0;
             transition: opacity 1s ease-in-out;
         }
-
         .video-slider video.active {
             opacity: 1;
         }
-
-        .nav-bar {
-            background-color: #343a40;
-            color: #fff;
-            padding: 15px 0;
-            text-align: center;
-            position: relative;
-            z-index: 10;
-        }
-
-        .nav-bar a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 1.1rem;
-        }
-
-        .nav-bar a:hover {
-            color: #d0d0d0;
-        }
-
-        .features-section, .news-section, .footer {
-            background-color: #ffffff;
-            padding: 30px;
-            text-align: center;
-            border-top: 1px solid #e0e0e0;
-        }
-
-        .features-section h2, .news-section h2 {
-            margin-top: 0;
-            color: #007bff;
-            font-size: 2rem;
-        }
-
-        .features-section ul, .news-section ul {
-            list-style: none;
-            padding: 0;
-            margin: 20px 0 0;
-        }
-
-        .features-section ul li, .news-section ul li {
-            margin: 10px 0;
-            font-size: 1.2rem;
-        }
-
-        .features-section ul li i, .news-section ul li i {
-            margin-right: 10px;
-            color: #007bff;
-        }
-
-        .footer {
-            background-color: #343a40;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-            clear: both;
-        }
-
         .arrow-button {
             position: absolute;
             top: 50%;
-            width: 50px;
-            height: 50px;
+            transform: translateY(-50%);
             background-color: rgba(0, 0, 0, 0.5);
             color: #fff;
             border: none;
-            font-size: 24px;
+            font-size: 1.5rem;
+            padding: 1rem;
             cursor: pointer;
-            z-index: 2;
-            transform: translateY(-50%);
+            transition: background-color 0.3s ease;
         }
-
-        .arrow-button.left {
-            left: 10px;
-        }
-
-        .arrow-button.right {
-            right: 10px;
-        }
-
         .arrow-button:hover {
             background-color: rgba(0, 0, 0, 0.8);
         }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2rem;
-            }
-
-            .header h2 {
-                font-size: 1.5rem;
-            }
-
-            .nav-bar a {
-                margin: 0 10px;
-                font-size: 1rem;
-            }
+        .arrow-button.left { left: 1rem; }
+        .arrow-button.right { right: 1rem; }
+        .features-section, .news-section {
+            padding: 4rem 0;
+            background-color: #f8f9fa;
+        }
+        .feature-item {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .feature-item i {
+            font-size: 3rem;
+            color: #1a2a6c;
+            margin-bottom: 1rem;
+        }
+        .news-item {
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .news-item:hover {
+            transform: translateY(-5px);
+        }
+        .footer {
+            background-color: #333;
+            color: #fff;
+            padding: 2rem 0;
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <h1>Event Hub</h1>
-        <h2>Marian College Kuttikkanam</h2>
-        <p>Empowering Students for a Brighter Future</p>
+    <header class="header text-center">
+        <h1 class="display-4">Event Hub</h1>
+        <h2 class="h3">Marian College Kuttikkanam</h2>
+        <p class="lead">Empowering Students for a Brighter Future</p>
     </header>
 
-    <nav class="nav-bar">
+    <nav class="nav-bar text-center">
         <a href="{% url 'login' %}">Login</a>
         <a href="{% url 'signup' %}">Sign Up</a>
         <a href="{% url 'about' %}">About Us</a>
@@ -188,41 +117,79 @@
         <div class="video-slider">
             {% if videos %}
                 {% for video in videos %}
-                    <video class="{% if forloop.first %}active{% endif %}" autoplay muted>
+                    <video class="{% if forloop.first %}active{% endif %}" autoplay muted loop>
                         <source src="{{ MEDIA_URL }}{{ video.video.url }}" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                 {% endfor %}
             {% else %}
-                <p>No videos available</p>
+                <p class="text-center">No videos available</p>
             {% endif %}
-            <button class="arrow-button left">&#10094;</button>
-            <button class="arrow-button right">&#10095;</button>
+            <button class="arrow-button left"><i class="fas fa-chevron-left"></i></button>
+            <button class="arrow-button right"><i class="fas fa-chevron-right"></i></button>
         </div>
     </div>
 
-    <div class="features-section">
-        <h2>Our Features</h2>
-        <ul>
-            <li><i class="fas fa-graduation-cap"></i> Best Education</li>
-            <li><i class="fas fa-book"></i> Experienced Faculty</li>
-            <li><i class="fas fa-users"></i> Friendly Environment</li>
-        </ul>
-    </div>
+    <section class="features-section">
+        <div class="container">
+            <h2 class="text-center mb-5">Why Choose Us</h2>
+            <div class="row">
+                <div class="col-md-4 feature-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Best Education</h3>
+                    <p>Providing top-notch education to shape future leaders.</p>
+                </div>
+                <div class="col-md-4 feature-item">
+                    <i class="fas fa-book"></i>
+                    <h3>Experienced Faculty</h3>
+                    <p>Learn from industry experts and accomplished academics.</p>
+                </div>
+                <div class="col-md-4 feature-item">
+                    <i class="fas fa-users"></i>
+                    <h3>Friendly Environment</h3>
+                    <p>Foster growth in a supportive and inclusive community.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <div class="news-section">
-        <h2>Latest News</h2>
-        <ul>
-            <li><a href="#">News 1</a></li>
-            <li><a href="#">News 2</a></li>
-            <li><a href="#">News 3</a></li>
-        </ul>
-    </div>
+    <section class="news-section">
+        <div class="container">
+            <h2 class="text-center mb-5">Latest News</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="news-item">
+                        <h3>News 1</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <a href="#" class="btn btn-primary">Read More</a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="news-item">
+                        <h3>News 2</h3>
+                        <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <a href="#" class="btn btn-primary">Read More</a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="news-item">
+                        <h3>News 3</h3>
+                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+                        <a href="#" class="btn btn-primary">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <div class="footer">
-        <p>&copy; 2024 Marian College. All rights reserved.</p>
-    </div>
+    <footer class="footer text-center">
+        <div class="container">
+            <p>&copy; 2024 Marian College. All rights reserved.</p>
+            <p>Developed by Alvin K Sabu</p>
+        </div>
+    </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var videos = document.querySelectorAll('.video-slider video');
@@ -234,6 +201,8 @@
                     if (i === index) {
                         video.classList.add('active');
                         video.play();
+                    } else {
+                        video.pause();
                     }
                 });
             }
@@ -261,7 +230,7 @@
             // Start video playback
             setTimeout(() => {
                 videos[0].play();
-            }, 1000); // Initial delay before starting the first video
+            }, 1000);
         });
     </script>
 </body>

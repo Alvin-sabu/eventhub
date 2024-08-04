@@ -5,117 +5,134 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us | Event Management System</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            font-family: 'Roboto', sans-serif;
             color: #333;
         }
         .navbar {
-            margin-bottom: 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
         }
-        .about-section {
-            background: linear-gradient(to right, #6a11cb, #2575fc);
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #fff;
-            padding: 60px 0;
+            padding: 100px 0;
             text-align: center;
         }
-        .about-section h1 {
-            font-weight: bold;
-            font-size: 48px;
+        .hero-section h1 {
+            font-weight: 700;
+            font-size: 3.5rem;
             margin-bottom: 20px;
         }
-        .about-section p {
-            font-size: 18px;
-            margin-bottom: 30px;
+        .hero-section p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+        .about-content {
+            padding: 80px 0;
+        }
+        .about-image {
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
         .team-section {
-            background-color: #fff;
-            padding: 60px 0;
-            text-align: center;
-        }
-        .team-section h2 {
-            font-weight: bold;
-            font-size: 36px;
-            margin-bottom: 40px;
+            background-color: #f8f9fa;
+            padding: 80px 0;
         }
         .team-member {
-            margin: 20px;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
+            text-align: center;
+            margin-bottom: 40px;
         }
         .team-member img {
-            width: 120px;
-            height: 120px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
-            margin-bottom: 15px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         .team-member h3 {
-            font-weight: bold;
-            font-size: 22px;
+            font-weight: 600;
+            font-size: 1.5rem;
             margin-bottom: 10px;
         }
         .team-member p {
-            font-size: 16px;
-            margin-bottom: 10px;
+            color: #6c757d;
         }
     </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Event Management System</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'about' %}">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'contact' %}">Contact</a>
-                </li>
-            </ul>
+        <div class="container">
+            <a class="navbar-brand" href="#">Event Management System</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'about' %}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <div class="about-section">
-        <h1>About Us</h1>
-        <p>We are a dedicated team of event management professionals at Marian College Kuttikkanam, committed to organizing exceptional events that enrich campus life and foster community spirit. Our mission is to create vibrant and memorable experiences that align with the college's values and goals.</p>
-        <p>Specializing in academic, cultural, and social events, we collaborate closely with students, faculty, and staff to bring innovative ideas to life. Whether it’s a seminar, a festival, or a student-led initiative, our team ensures every detail is thoughtfully planned and executed to enhance the college experience.</p>
-    </div>
-
-    <div class="team-section">
-        <h2>Meet Our Team</h2>
+    <section class="hero-section">
         <div class="container">
+            <h1>About Us</h1>
+            <p>Empowering campus life through exceptional event management at Marian College Kuttikkanam</p>
+        </div>
+    </section>
+
+    <section class="about-content">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <img src="{% static 'images/event logo.jpeg' %}" alt="Event Management Team" class="img-fluid about-image">
+                </div>
+                <div class="col-lg-6">
+                    <h2 class="mb-4">Our Mission</h2>
+                    <p>At Marian College Kuttikkanam's Event Management System, we are dedicated to creating vibrant and memorable experiences that enrich campus life and foster community spirit. Our team of passionate professionals works tirelessly to bring innovative ideas to life, ensuring every event aligns with our college's values and goals.</p>
+                    <p>From academic seminars to cultural festivals and student-led initiatives, we handle every detail with precision and creativity. Our commitment to excellence drives us to continuously improve and adapt, making each event a unique and impactful experience for all participants.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="team-section">
+        <div class="container">
+            <h2 class="text-center mb-5">Meet Our Team</h2>
             <div class="row">
                 {% for member in team_members %}
                     <div class="col-md-4">
                         <div class="team-member">
-                            <img src="{{ member.image.url }}" alt="{{ member.name }}">  <!-- Use 'image' if the field is named 'image' -->
+                            <img src="{{ member.image.url }}" alt="{{ member.name }}">
                             <h3>{{ member.name }}</h3>
-                            <p>{{ member.role }}</p>
+                            <p class="text-muted">{{ member.role }}</p>
                             <p>{{ member.bio }}</p>
                         </div>
                     </div>
                 {% endfor %}
             </div>
         </div>
-    </div>
+    </section>
 
-    <footer class="text-center py-4">
-        <p>&copy; 2024 Event Management System. All rights reserved.</p>
+    <footer class="bg-dark text-white text-center py-4">
+        <div class="container">
+            <p>&copy; 2024 Event Management System. All rights reserved.</p>
+        </div>
     </footer>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

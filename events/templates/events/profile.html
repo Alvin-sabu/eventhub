@@ -1,100 +1,127 @@
-<!-- events/templates/events/profile.html -->
 {% extends "base.html" %}
 {% load static %}
 
 {% block content %}
-<div class="container mt-5">
+<div class="container my-5">
     <div class="row">
         <!-- Sidebar -->
-        <div class="col-md-3">
-            <div class="card shadow-sm">
-                <img src="{{ user.profile.image.url }}" class="card-img-top rounded-circle" alt="Profile Picture" style="object-fit: cover; height: 200px; width: 200px;">
-                <div class="card-body">
+        <div class="col-lg-3 mb-4">
+            <div class="card border-0 shadow">
+                <div class="card-body text-center">
+                    <img src="{{ user.profile.image.url }}" class="img-fluid rounded-circle mb-3" alt="Profile Picture" style="width: 150px; height: 150px; object-fit: cover;">
                     <h4 class="card-title">{{ user.username }}</h4>
-                    <p class="card-text text-muted">{{ user.email }}</p>
-                    <!-- <a href="{% url 'profile_edit' %}" class="btn btn-primary btn-block mb-2">Edit Profile</a> -->
-                    <a href="{% url 'custom_logout' %}" class="btn btn-secondary btn-block">Logout</a>
+                    <p class="text-muted">{{ user.email }}</p>
+                    <a href="{% url 'custom_logout' %}" class="btn btn-outline-danger btn-sm mt-3">Logout</a>
                 </div>
             </div>
         </div>
 
         <!-- Main Content -->
-        <div class="col-md-9">
-            <ul class="nav nav-tabs mb-3" id="profileTabs" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="overview-tab" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="events-tab" data-toggle="tab" href="#events" role="tab" aria-controls="events" aria-selected="false">My Events</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Settings</a>
-                </li>
-            </ul>
-            <div class="tab-content" id="profileTabsContent">
-                <!-- Overview Tab -->
-                <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
-                    <h4 class="mb-3">Profile Overview</h4>
-                    <p><strong>Welcome, {{ user.username }}!</strong></p>
-                    <p><strong>Email:</strong> {{ user.email }}</p>
-                    <p><strong>Date Joined:</strong> {{ user.date_joined }}</p>
-                    <p><strong>Last Login:</strong> {{ user.last_login }}</p>
-                </div>
+        <div class="col-lg-9">
+            <div class="card border-0 shadow">
+                <div class="card-body">
+                    <ul class="nav nav-pills mb-4" id="profileTabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="overview-tab" data-toggle="pill" href="#overview" role="tab">Overview</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="events-tab" data-toggle="pill" href="#events" role="tab">My Events</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="settings-tab" data-toggle="pill" href="#settings" role="tab">Settings</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="profileTabsContent">
+                        <!-- Overview Tab -->
+                        <div class="tab-pane fade show active" id="overview" role="tabpanel">
+                            <h5 class="mb-4">Profile Overview</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>Username:</strong> {{ user.username }}</p>
+                                    <p><strong>Email:</strong> {{ user.email }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Date Joined:</strong> {{ user.date_joined|date:"F d, Y" }}</p>
+                                    <p><strong>Last Login:</strong> {{ user.last_login|date:"F d, Y H:i" }}</p>
+                                </div>
+                            </div>
+                        </div>
 
-                <!-- My Events Tab -->
-                <div class="tab-pane fade" id="events" role="tabpanel" aria-labelledby="events-tab">
-                    <h4 class="mb-3">My Events</h4>
-                    {% if user.registration_set.exists %}
-                        <ul class="list-group">
+                        <!-- My Events Tab -->
+                        <div class="tab-pane fade" id="events" role="tabpanel">
+                            <h5 class="mb-4">My Events</h5>
+                            {% if user.registration_set.exists %}
+                                <div class="list-group">
+                                    {% for registration in user.registration_set.all %}
+                                        <div class="list-group-item list-group-item-action flex-column align-items-start mb-3">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h5 class="mb-1">{{ registration.event.title }}</h5>
+                                                <small>{{ registration.event.date|date:"F d, Y" }}</small>
+                                            </div>
+                                            <p class="mb-1">{{ registration.event.description|truncatewords:20 }}</p>
+                                            <small><strong>Location:</strong> {{ registration.event.location }}</small>
+                                            <div class="mt-2">
+                                                <span class="badge badge-primary">Token: {{ registration.token }}</span>
+                                                {% if registration.event.results_published %}
+                                                    {% if registration.prize %}
+                                                        <span class="badge badge-success">Prize: {{ registration.prize }}</span>
+                                                    {% else %}
+                                                        <span class="badge badge-secondary">No prize awarded</span>
+                                                    {% endif %}
+                                                {% else %}
+                                                    <span class="badge badge-info">Results pending</span>
+                                                {% endif %}
+                                            </div>
+                                            <a href="{% url 'event_detail' registration.event.id %}" class="btn btn-outline-primary btn-sm mt-2">View Event</a>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <p class="text-muted">You haven't registered for any events yet.</p>
+                            {% endif %}
+                            {% comment %} Add some debug output here {% endcomment %}
                             {% for registration in user.registration_set.all %}
-                                <li class="list-group-item d-flex justify-content-between align-items-start mb-3">
-                                    <div>
-                                        <h5 class="mb-1">{{ registration.event.title }}</h5>
-                                        <p class="mb-1">{{ registration.event.description }}</p>
-                                        <p class="mb-1"><strong>Date:</strong> {{ registration.event.date }}</p>
-                                        <p class="mb-1"><strong>Location:</strong> {{ registration.event.location }}</p>
-                                        <p class="mb-1"><strong>Token:</strong> {{ registration.token }}</p>
-                                        {% if registration.event.results_published %}
-                                            {% if registration.prize %}
-                                                <p class="mb-1"><strong>Prize:</strong> {{ registration.prize }}</p>
-                                            {% else %}
-                                                <p class="mb-1"><strong>Prize:</strong> No prize awarded</p>
-                                            {% endif %}
-                                        {% else %}
-                                            <p class="mb-1"><strong>Prize:</strong> Result not published</p>
-                                        {% endif %}
-                                    </div>
-                                    <a href="{% url 'event_detail' registration.event.id %}" class="btn btn-outline-primary">View Event</a>
-                                </li>
+                                <p>{{ registration.event.title }}</p>
                             {% endfor %}
-                        </ul>
-                    {% else %}
-                        <p class="text-muted">You have not registered for any events yet.</p>
-                    {% endif %}
-                </div>
+                        </div>
 
-                <!-- Settings Tab -->
-                <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
-                    <h4 class="mb-3">Settings</h4>
-                    <form method="post" action="{% url 'profile_edit' %}" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}">
+                        <!-- Settings Tab -->
+                        <div class="tab-pane fade" id="settings" role="tabpanel">
+                            <h5 class="mb-4">Profile Settings</h5>
+                            <form method="post" action="{% url 'profile_edit' %}" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="username">Username</label>
+                                    <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="image">Profile Image</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="image" name="image">
+                                        <label class="custom-file-label" for="image">Choose file</label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </form>
                         </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="image">Profile Image</label>
-                            <input type="file" class="form-control-file" id="image" name="image">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Update custom file input label
+    $('.custom-file-input').on('change', function() {
+        let fileName = $(this).val().split('\\').pop();
+        $(this).next('.custom-file-label').addClass("selected").html(fileName);
+    });
+</script>
 {% endblock %}
