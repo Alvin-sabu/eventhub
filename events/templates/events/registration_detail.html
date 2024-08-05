@@ -1,0 +1,14 @@
+<!-- registration_detail.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Registration Details</h2>
+    <p><strong>Event:</strong> {{ registration.event.title }}</p>
+    <p><strong>Date:</strong> {{ registration.event.date }}</p>
+    <p><strong>Time:</strong> {{ registration.event.time }}</p>
+    <p><strong>Location:</strong> {{ registration.event.location }}</p>
+    <p><strong>Name:</strong> {{ registration.name }}</p>
+    <p><strong>Email:</strong> {{ registration.email }}</p>
+    <p><strong>Token:</strong> {{ registration.token }}</p>
+{% endblock %}
