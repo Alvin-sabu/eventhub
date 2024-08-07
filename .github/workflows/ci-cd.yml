@@ -20,7 +20,7 @@ jobs:
           EC2_HOST: ${{ secrets.EC2_HOST }}
         run: |
           ssh -i <(echo "$EC2_SSH_PRIVATE_KEY") $EC2_USER@$EC2_HOST << 'EOF'
-            cd /home/ubuntu/eventhub/event_management_system
+            cd /home/ubuntu/eventhub
             git pull origin main
             source /home/ubuntu/eventhub/venv~/bin/activate
             pip install -r requirements.txt
