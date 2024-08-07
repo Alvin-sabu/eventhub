@@ -56,8 +56,12 @@ WSGI_APPLICATION = 'event_management_system.wsgi.application'
 # Database settings
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'eventhub_database',
+        'USER': 'alvin',
+        'PASSWORD': 'acEKFodfmwBp9TXCcfVtpVFPWkb1e4ep',
+        'HOST': 'dpg-cqppp8dsvqrc7380dsa0-a.oregon-postgres.render.com',
+        'PORT': '5432',
     }
 }
 

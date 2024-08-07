@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: django
+    env: docker
+    dockerfilePath: ./Dockerfile
+    buildCommand: ""
+    startCommand: python manage.py runserver 0.0.0.0:8000
+    envVars:
+      - key: DATABASE_URL
+        value: postgresql://alvin:acEKFodfmwBp9TXCcfVtpVFPWkb1e4ep@dpg-cqppp8dsvqrc7380dsa0-a.oregon-postgres.render.com/eventhub_database
