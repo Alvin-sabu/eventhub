@@ -1,63 +1,51 @@
-name: Deploy to EC2 🚀
+name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout current branch ✅
-        uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Set up SSH key and whitelist EC2 IP address 🐻‍❄️
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
         run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-      - name: Create .env file dynamically 🧨
-        env:
-          GOOGLE_SSO_CLIENT_ID: ${{ secrets.GOOGLE_SSO_CLIENT_ID }}
-          GOOGLE_SSO_PROJECT_ID: ${{ secrets.GOOGLE_SSO_PROJECT_ID }}
-          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-          AWS_S3_SIGNATURE_NAME: ${{ secrets.AWS_S3_SIGNATURE_NAME }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_STORAGE_BUCKET_NAME: ${{ secrets.AWS_STORAGE_BUCKET_NAME }}
-          AWS_S3_REGION_NAME: ${{ secrets.AWS_S3_REGION_NAME }}
-          AWS_S3_FILE_OVERWRITE: ${{ secrets.AWS_S3_FILE_OVERWRITE }}
-          AWS_S3_VERITY: ${{ secrets.AWS_S3_VERITY }}
-          AWS_DEFAULT_ACL: ${{ secrets.AWS_DEFAULT_ACL }}
+      - name: Create SSH directory
+        run: mkdir -p ~/.ssh
+
+      - name: Add EC2 Host Key
         run: |
-          echo "GOOGLE_SSO_CLIENT_ID=${GOOGLE_SSO_CLIENT_ID}" > .env
-          echo "GOOGLE_SSO_PROJECT_ID=${GOOGLE_SSO_PROJECT_ID}" >> .env
-          echo "GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}" >> .env
-          echo "AWS_S3_SIGNATURE_NAME=${AWS_S3_SIGNATURE_NAME}" >> .env
-          echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" >> .env
-          echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" >> .env
-          echo "AWS_STORAGE_BUCKET_NAME=${AWS_STORAGE_BUCKET_NAME}" >> .env
-          echo "AWS_S3_REGION_NAME=${AWS_S3_REGION_NAME}" >> .env
-          echo "AWS_S3_FILE_OVERWRITE=${AWS_S3_FILE_OVERWRITE}" >> .env
-          echo "AWS_S3_VERITY=${AWS_S3_VERITY}" >> .env
-          echo "AWS_DEFAULT_ACL=${AWS_DEFAULT_ACL}" >> .env
-
-      - name: Copy files to remote server 🚙
+          ssh-keyscan $EC2_HOST >> ~/.ssh/known_hosts
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
-          EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
-        run: |
-          scp -r * $EC2_USERNAME@$EC2_HOST:/home/ubuntu/
 
-      - name: Run Bash Script To Deploy App 🚀
+      - name: Deploy to EC2
+        run: |
+          echo "$EC2_SSH_PRIVATE_KEY" > /tmp/deploy_key
+          chmod 600 /tmp/deploy_key
+          ssh -o StrictHostKeyChecking=no -i /tmp/deploy_key $EC2_USER@$EC2_HOST << 'EOF'
+          cd /home/ubuntu/eventhub
+          git pull origin main
+          source venv~/bin/activate
+          pip install -r requirements.txt
+          python manage.py collectstatic --noinput
+          python manage.py migrate
+          sudo systemctl restart gunicorn
+          EOF
         env:
+          EC2_SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          EC2_USER: ${{ secrets.EC2_USER }}
           EC2_HOST: ${{ secrets.EC2_HOST }}
-          EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
-        run: |
-          ssh -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_HOST "chmod +x /home/ubuntu/deploy.sh && /home/ubuntu/deploy.sh"
-
-      - name: Clean up SSH key 🚀
-        if: always()
-        run: rm -f ~/.ssh/id_rsa
