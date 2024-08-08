@@ -18,7 +18,34 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'events',
+    'storages',
+
 ]
+
+# AWS settings
+AWS_ACCESS_KEY_ID = 'AKIAQPHJMQZMHM5IM7J2'
+AWS_SECRET_ACCESS_KEY = 'BStS5Ga1VYf/gygrOzXXOjtPxLyfAB9Eet9bGZi1'
+AWS_STORAGE_BUCKET_NAME = 'eventhub-storage'
+AWS_S3_REGION_NAME = 'eu-north-1'  # e.g., 'us-east-1'
+AWS_S3_SIGNATURE_VERSION = 's3v4'
+
+# S3 bucket configuration
+AWS_S3_CUSTOM_DOMAIN = f'eventhub-storage.s3.amazonaws.com'
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+
+# # Static files (CSS, JavaScript, images)
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
+
+# Media files (uploads)
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+
+# Optional: If you have static files locally
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_REDIRECT_URL = '/'  # URL to redirect to after successful login
 LOGOUT_REDIRECT_URL = '/'  # URL to redirect to after logout
@@ -92,9 +119,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Media files
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# # Media files
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
